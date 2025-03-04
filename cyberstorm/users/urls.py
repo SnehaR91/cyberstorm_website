@@ -1,9 +1,10 @@
-# users/urls.py
 from django.urls import path
-from .views import register_team, login_team, dashboard, logout_team
+from django.contrib.auth.views import LogoutView
+from .views import *
 
 urlpatterns = [
-    path('register/', register_team, name='register'),
-    path('login/', login_team, name='login'),
-    path('logout/', logout_team, name='logout'),
+    path("register/", register, name="register"),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("profile/", profile, name="profile"),
 ]

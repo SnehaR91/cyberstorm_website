@@ -1,67 +1,57 @@
-# users/views.py
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Team
 
-def register_team(request):
-    if request.method == 'POST':
-        team_name = request.POST['team_name']
-        team_leader = request.POST['team_leader']
-        team_leader_email = request.POST['team_leader_email']
-        members_count = int(request.POST['members_count'])
-        member_emails = request.POST['member_emails']
-        password = request.POST['password']
+def register(request):
+    if request.method == "POST":
+        team_name = request.POST["team_name"]
+        team_leader = request.POST["team_leader"]
+        team_leader_email = request.POST["team_leader_email"]
+        members_count = int(request.POST["members_count"])
+        password = request.POST["password"]
 
-        if members_count > 4:
-            messages.error(request, "A team can have at most 4 members.")
-            return render(request, 'register.html')
+        # Get member details
+        member_names = [request.POST[f"member_name_{i}"] for i in range(1, members_count)]
+        member_emails = [request.POST[f"member_email_{i}"] for i in range(1, members_count)]
 
-        # Ensure team leader email is included in the members list
-        emails = set(member_emails.split(',')) | {team_leader_email}
-        all_member_emails = ','.join(emails)
-
+        # Check if team name exists
         if Team.objects.filter(team_name=team_name).exists():
-            messages.error(request, "Team name already taken.")
-            return render(request, 'register.html')
+            messages.error(request, "Team name already exists.")
+        else:
+            team = Team.objects.create_user(
+                team_name=team_name,
+                team_leader=team_leader,
+                team_leader_email=team_leader_email,
+                password=password,
+            )
+            team.member_names = ",".join(member_names)
+            team.member_emails = ",".join(member_emails)
+            team.save()
+            messages.success(request, "Team registered successfully! Please log in.")
+            return redirect("login")
 
-        if Team.objects.filter(team_leader_email=team_leader_email).exists():
-            messages.error(request, "Team leader email already registered.")
-            return render(request, 'register.html')
+    return render(request, "users/register.html")
 
-        team = Team(
-            team_name=team_name,
-            team_leader=team_leader,
-            team_leader_email=team_leader_email,
-            members_count=members_count,
-            member_emails=all_member_emails
-        )
-        team.set_password(password)
-        team.save()
+def login_view(request):
+    if request.method == "POST":
+        team_name = request.POST["team_name"]
+        password = request.POST["password"]
 
-        messages.success(request, "Team registered successfully! You can now log in.")
-        return redirect('login')
+        team = authenticate(request, username=team_name, password=password)
+        if team:
+            login(request, team)
+            messages.success(request, f"Welcome, {team.team_leader}!")
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid credentials")
 
-    return render(request, 'register.html')
+    return render(request, "users/login.html")
 
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 
-def login_team(request):
-    if request.method == 'POST':
-        team_name = request.POST['team_name']
-        password = request.POST['password']
-        try:
-            team = Team.objects.get(team_name=team_name)
-            if team.check_password(password):
-                request.session['team_name'] = team_name  # Store session
-                messages.success(request, "Login successful!")
-                return redirect('dashboard')
-            else:
-                messages.error(request, "Invalid password.")
-        except Team.DoesNotExist:
-            messages.error(request, "Invalid team name.")
+def profile(request):
+    return render(request, "users/profile.html")
 
-    return render(request, 'login.html')
-
-
-def logout_team(request):
-    request.session.flush()
-    return redirect('login')
