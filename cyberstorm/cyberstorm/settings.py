@@ -15,7 +15,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import dj_database_url
 
+ALLOWED_HOSTS = ["cyberstorm.onrender.com"]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -33,15 +35,9 @@ LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cyberstorm',
-        'USER': 'sneharamanathan',
-        'PASSWORD': 'Ttlsh1wwy@',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
+
 # Static files settings
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
