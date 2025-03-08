@@ -36,6 +36,7 @@ LOGOUT_REDIRECT_URL = "login"
 
 DATABASES = {
     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    
 }
 
 # Static files settings
