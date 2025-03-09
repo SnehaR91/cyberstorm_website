@@ -379,7 +379,7 @@ footer {
             <ul class="nav-links">
                 <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="">Schedule</a></li>
-                <li><a href="">Sponsors</a></li>
+                <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
                 <li><a href="{% url 'rules' %}">Rules</a></li>
             
                 {% if user.is_authenticated %}
@@ -415,6 +415,7 @@ footer {
     <section class="domains">
         <h1>Domains</h1>
         <div class="three-row">
+            <div class="three-column"><img src="{% static 'images/0.png' %}" class="domain-image"></div>
             <div class="three-column"><img src="{% static 'images/1.png' %}" class="domain-image"></div>
             <div class="three-column"><img src="{% static 'images/2.png' %}" class="domain-image"></div>
         </div>
