@@ -348,13 +348,13 @@ footer {
     </div>
     <ul class="nav-links">
       <li><a href="{% url 'about' %}">About</a></li>
-      <li><a href="">Schedule</a></li>
+      <li><a href="{% url 'schedule' %}">Schedule</a></li>
       <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
       <li><a href="{% url 'rules' %}">Rules</a></li>
   
       {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>
-                    <li style="margin-right: 480px;"><a href="{% url 'profile' %}" class="register-btn">Profile</a></li>
+                    <li style="margin-right: 480px;"><a href="" class="register-btn">Profile</a></li>
                 {% else %}
                 
                     <li><a href="{% url 'login' %}">Login</a></li>

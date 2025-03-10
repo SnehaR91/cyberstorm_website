@@ -466,9 +466,6 @@ footer {
   justify-content: space-between;
 }
 
-.title p {
-  width: 50%;
-}
 
 .card-footer {
   color: #ffffff88;
@@ -546,6 +543,11 @@ img {
     width: 100%;
   }
 }
+.card-text{
+    font-size: 18px;
+    color: white;
+    text-align: center;
+}
 
     </style>
 </head>
@@ -560,13 +562,13 @@ img {
         
             <ul class="nav-links">
                 <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="">Schedule</a></li>
+                <li><a href="{% url 'schedule' %}">Schedule</a></li>
                 <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
                 <li><a href="{% url 'rules' %}">Rules</a></li>
             
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'logout' %}">Logout</a></li>
-                    <li style="margin-right: 480px;"><a href="{% url 'profile' %}" class="register-btn">Profile</a></li>
+                    <li style="margin-right: 480px;"><a href="" class="register-btn">Profile</a></li>
                 {% else %}
                 
                     <li><a href="{% url 'login' %}">Login</a></li>
@@ -620,8 +622,8 @@ img {
                           <div class="description">
                             <div class="title">
                               <p class="title">
-                                <p>
-                                    
+                                <p class="card-text">
+                                   This is info about redfox. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo commodi soluta fugiat, distinctio optio saepe omnis magni nisi consequatur voluptate incidunt aliquam voluptas perferendis eveniet assumenda eaque qui aspernatur quidem!
                                 </p>
                                               </p>
                               <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
