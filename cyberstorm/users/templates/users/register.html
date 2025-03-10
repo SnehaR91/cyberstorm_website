@@ -249,7 +249,7 @@ footer {
         <input type="email" name="team_leader_email" required>
 
         <label>Number of Members (Max 4):</label>
-        <input type="number" name="members_count" min="1" max="4" required>
+        <input type="number" id = "members_count" name="members_count" min="1" max="4" required>
         <p> Enter details of members other than leader</p>
 
         <div id="members"></div>
@@ -318,6 +318,11 @@ footer {
     const navLinks = document.querySelector(".nav-links");
     navLinks.classList.toggle("show");
     }
+    document.getElementById("members_count").addEventListener("input", function () {
+    if (this.value > 4) {
+      this.value = 4;
+    }
+  });
       </script>
 </body>
 </html>
